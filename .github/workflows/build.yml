@@ -37,6 +37,7 @@ jobs:
           'unknown'
         }}
 
+      ABI: ${{ startsWith(matrix.os, 'windows') && 'msvc' || 'gnu' }}
       TARGET_EXT: ${{ startsWith(matrix.os, 'windows') && '.exe' || '' }}
 
     steps:
@@ -45,7 +46,7 @@ jobs:
         shell: bash
         run: |
           export BASE_TRIPLE=${{ env.ARCH }}-${{ env.VENDOR }}-${{ env.OS }}
-          echo "TRIPLE=$BASE_TRIPLE-gnu" >> $GITHUB_ENV
+          echo "TRIPLE=$BASE_TRIPLE-$ABI" >> $GITHUB_ENV
           echo "MUSL_TRIPLE=$BASE_TRIPLE-musl" >> $GITHUB_ENV
 
       - name: Build
