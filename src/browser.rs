@@ -34,7 +34,10 @@ fn read_message() -> Result<String, io::Error> {
     Ok(msg)
 }
 
-#[allow(clippy::cast_possible_truncation, reason = "Truncation is safe, at most it will only truncate the message")]
+#[allow(
+    clippy::cast_possible_truncation,
+    reason = "Truncation is safe, at most it will only truncate the message"
+)]
 fn send_message(message: &str) -> Result<(), io::Error> {
     let length = (message.len() as u32).to_ne_bytes();
     let message = message.as_bytes();
