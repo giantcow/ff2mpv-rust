@@ -76,12 +76,21 @@ impl Command {
         debug!("Parsed message: {ff2mpv_message:?}");
 
         let mut extra_args: Vec<String> = Vec::new();
-        if let Some(ref browser) = config.cookies_from_browser
-            && let Some(cookie_file) =
-                Command::export_cookies(&config.ytdl_path, browser, &ff2mpv_message.url)
-            && let Some(header) =
-                Command::build_cookie_argument(cookie_file.path(), &ff2mpv_message.url)
+        if let Some(cookie_file) = Command::export_cookies(
+            &config.ytdl_path,
+            &config.cookies_from_browser,
+            &ff2mpv_message.url,
+        ) && let Some(header) =
+            Command::build_cookie_argument(cookie_file.path(), &ff2mpv_message.url)
         {
+            extra_args.push(format!(
+                "--ytdl-raw-options-append=cookies-from-browser={}",
+                config.cookies_from_browser
+            ));
+            extra_args.push(format!(
+                "--script-opts=ytdl_hook-ytdl_path={}",
+                config.ytdl_path
+            ));
             extra_args.push(format!("--http-header-fields-append=Cookie: {header}"));
         }
 

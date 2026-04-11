@@ -14,7 +14,7 @@ pub struct Config {
     pub player_command: String,
     pub player_args: Vec<String>,
     pub ytdl_path: String,
-    pub cookies_from_browser: Option<String>,
+    pub cookies_from_browser: String,
 }
 
 impl Default for Config {
@@ -24,7 +24,7 @@ impl Default for Config {
             player_command: "mpv".to_owned(),
             player_args: vec![String::from("--no-terminal"), String::from("--")],
             ytdl_path: "yt-dlp".to_string(),
-            cookies_from_browser: None,
+            cookies_from_browser: "firefox::none".to_string(),
         }
     }
 }
