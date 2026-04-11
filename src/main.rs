@@ -99,4 +99,9 @@ mod util {
             )
             .init();
     }
+
+    #[cfg(all(target_os = "windows", not(feature = "unstable_windows_logging")))]
+    pub(super) fn setup_logging(_log_level: &str) {
+        // No-op
+    }
 }
