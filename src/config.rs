@@ -7,18 +7,24 @@ use serde::Deserialize;
 
 use crate::error::FF2MpvError;
 
-#[derive(Deserialize)]
+#[derive(Debug, Deserialize)]
 #[serde(default)]
 pub struct Config {
+    pub log_level: String,
     pub player_command: String,
     pub player_args: Vec<String>,
+    pub ytdl_path: String,
+    pub cookies_from_browser: Option<String>,
 }
 
 impl Default for Config {
     fn default() -> Self {
         Self {
+            log_level: "info".to_string(),
             player_command: "mpv".to_owned(),
             player_args: vec![String::from("--no-terminal"), String::from("--")],
+            ytdl_path: "yt-dlp".to_string(),
+            cookies_from_browser: None,
         }
     }
 }
